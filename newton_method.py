@@ -4,7 +4,7 @@ import numpy as np
 from numpy.linalg import inv, norm
 import copy
 
-# Line code 7 - 21 has to be computed manually for different functions
+# This code is customized to fit the function provided below. It can be easily tweaked to fit any function
 # Let's consider the function
 # f: (x1, x2, x3, x4) |-> (x1 + 10x2)^4 +5(x3 - x4)^4 + (x2 - 2x3)^4 + 10(x1 - x4)^4
 
