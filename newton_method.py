@@ -1,15 +1,12 @@
-# Implementation by:
-# Nom: Michael Aii Mbajwa
-# Student ID: 0210152807
-
 # Import all packages to be used
 import sympy as sym
 import numpy as np
 from numpy.linalg import inv, norm
 import copy
 
-
-# Exercise 1.2
+# Line code 7 - 21 has to be computed manually for different functions
+# Let's consider the function
+# f: (x1, x2, x3, x4) |-> (x1 + 10x2)^4 +5(x3 - x4)^4 + (x2 - 2x3)^4 + 10(x1 - x4)^4
 
 # I declare the variables
 x1 = sym.Symbol('x1')
@@ -124,48 +121,6 @@ def newton(f, var, start, eps):
     return final_result
 
 
-# Exercise 2.3
-
-# Define given function on sympy
-function_2 = sym.expand((x1 + x2)**2 + (x3 + x4)**4 + 3*(x1 - 2)**2 + (2*x3+1)**2 + 2*(x4 - 0.5)**2 + 1)
-
-# Define projection operator for R**4
-vector = np.array([x1-x2, -x1+x2, x3-x4, -x3+x4])
-Pf = 0.5*vector
-
-
-def projector_subs(proj, val):
-    """
-    Function for substituting real number values in projector operator
-    :param proj: the projector operator in form of a numpy array
-    :param val: the values to be substituted in order
-    :return: returns projector operator vector with susbtituted values
-    """
-    holder = copy.deepcopy(proj)  # Deep copy so we don't edit the original projector operator
-    a, b, c, d = val  # Unpacks the values provided
-    for i in range(len(proj)):
-        holder[i] = holder[i].subs([(x1, a), (x2, b), (x3, c), (x4, d)])
-    return holder
-
-
-def proj_grad_desc(func, pf, var, start, eps, s=0.2):
-    xk = np.array(start)  # Initialize starting point as a numpy array
-    k = 0  # Initialize iteration
-    diff = gradient(func, var)  # Calculates the gradient
-
-    while norm(grad_subs(diff, xk)) > eps:  # If the norm of the gradient in terms of xk > greater than precision
-        gradient_vec = grad_subs(diff, xk)  # Substitute values of xk into gradient
-        yk = xk - s*gradient_vec
-
-        xk = projector_subs(pf, yk)  # Substitute values of yk into projector operator to get xk
-        k += 1  # Iterator increment
-
-    fk = func.subs([(x1, xk[0]), (x2, xk[1]), (x3, xk[2]), (x4, xk[3])])  # Calculates the value of f(xk)
-
-    final_result = "xk: {}\nf(xk): {}\nIterations: {}".format(xk, fk, k)  # Final output to be returned
-    return final_result
-
-
 if __name__ == "__main__":
     print(newton(function_1, variables, [3, -1, 0, 1], 0.01))
 
@@ -173,9 +128,3 @@ if __name__ == "__main__":
     # xk: [0.08670765 - 0.00867076  0.00867076  0.03468306]
     # f(xk): 0.0000760016046916214
     # Iterations: 9
-
-    print(proj_grad_desc(function_2, Pf, variables, [1, -1, 1, -1], 0.01))
-    # Returns
-    # xk: [1.99836160000000 - 1.99836160000000 - 0.500019200000000 0.500019200000000]
-    # f(xk): 1.00000805527552
-    # Iterations: 7
