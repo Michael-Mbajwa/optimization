@@ -4,7 +4,7 @@ import numpy as np
 from numpy.linalg import inv, norm
 import copy
 
-# This code is customized to fit the function provided below. It can be easily tweaked to fit any function
+# This code is customized to fit the function provided below. It can be easily tweaked to fit any provided function.
 # Let's consider the function
 # f(x) = (x1 + x2)^2 + (x3 + x4)^4 + 3(x1 -2)^2 + (2x3 +1)^2 + 2(x4 -0.5)^2 + 1
 
